@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<h1 class="title">
+  Hiya, {{ name }}!
+</h1>
+<h2 class="subtitle">What would you like to do today? :)</h2>
+<h2 class="subtitle"><span class="has-text-success">Your Friend ID:</span> {{ friendID }}</h2>
+<h2 class="subtitle"><span class="has-text-success">Your ELO:</span> {{ elo }}</h2>
+<a href="{{ url_for('main.select') }}" class="button is-link is-medium">Play a Match</a>
+<a href="{{ url_for('main.make') }}" class="button is-link is-medium">Make a Deck</a>
+<a href="{{ url_for('main.add') }}" class="button is-link is-medium">Add a Question</a>
+<br><br><br>
+<h1 class="title">
+  Friends List
+</h1>
+<form method="POST" action="/profile">
+  <div class="field">
+      <div class="control">
+          <input class="input is-large" type="title" name="friendid" placeholder="Friend ID" autofocus="">
+      </div>
+  </div>
+  <button class="button is-block is-info is-large is-fullwidth">Add a Friend</button>
+</form>
+
+<br><br>
+<section class="cards">
+<div class="columns is-multiline">
+  {% for friend in friends %}
+  <div class="column is-4">
+    <a href="{{ url_for('.userreturn', id=friend.id) }}">
+    <div class="card">
+      <p class="card-header-title">
+        {{friend.name}}
+      </p>
+    </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

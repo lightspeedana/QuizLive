@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+
+$family-serif: 'Nunito', sans-serif;
+$family-primary: $family-serif;
+
+$green: #7FF0A1;
+$blue: #4A5899;
+$black: #0A0F0D;
+$cyan: #CCC9E7;
+$red: #FB8888;
+
+$weight-light: 300
+$weight-normal: 400
+$weight-medium: 500
+$weight-semibold: 600
+$weight-bold: 700
+
+$primary: $green;
+$primary-invert: $black;
+$link: $red;
+$danger: $cyan;
+$success: $blue;
+
+@import "../bulmaEdit/bulma-0.9.1/bulma/sass/utilities/initial-variables.sass";
+@import "../bulmaEdit/bulma-0.9.1/bulma/sass/utilities/functions.sass";
+@import "../bulmaEdit/bulma-0.9.1/bulma/bulma.sass";

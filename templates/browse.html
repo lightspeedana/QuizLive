@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<h1 class="title">
+  Browse All Decks
+</h1>
+<section class="cards">
+<div class="columns is-multiline">
+  {% for deck in query %}
+  <div class="column is-4">
+    <a href="{{ url_for('.decks', id=deck.id) }}">
+    <div class="card">
+      <p class="card-header-title">
+        {{deck.name}}
+      </p>
+    </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    var question_ID = 0;
+    function find_random(deck_ID, username) { // Let the server know we want to play against a random, and what deck, and who we are!
+        socket.emit("find_game", {"random":true, "deckID":deck_ID, "username":username});
+    }
+
+    function challenge(deck_ID, username) { // Let the server know we want a room to challenge a friend, and what deck, and who we are!
+        socket.emit("find_game", {"random":false, "deckID":deck_ID, "username":username});
+    }
+
+    function submit_answer(answer_ID) { // Let the server know we've answered a question!
+        socket.emit("submit_answer", {"questionID":question_ID, "answerID":answer_ID, "url":document.location});
+    }
+    
+    socket.on("refresh", function() { // Listen for the server telling us to refresh, and when it does, refresh!
+        location.reload();
+    })
+
+    socket.on("end_quiz", function(data) { // Listen for the server telling us we're finished, and redirect us to the results/waiting page!
+        document.location = "{{url_for('main.results',roomID=0)[:-2] + '/'}}"+data["roomID"];
+    })
+
+    socket.on("submit_question", function(data) { // Listen for the server sending us a new question, and update the page accordingly!
+    // This gets called when we answer a question, so no need to worry about mismatching answers to questions.
+        question_ID = data["question_ID"]
+        document.getElementsByClassName("title")[0].innerHTML = data["question"];
+        document.getElementsByClassName("a1")[0].innerHTML = data["a0"];
+        document.getElementsByClassName("a2")[0].innerHTML = data["a1"];
+        document.getElementsByClassName("a3")[0].innerHTML = data["a2"];
+        document.getElementsByClassName("a4")[0].innerHTML = data["a3"];
+        document.getElementsByClassName("score")[0].innerHTML = data["score"];
+    })
+
+    socket.on("found_room", function(data) { // Listen for the server telling us a game has been found against a random, and redirect us to game screen!
+        alert("Room:" + data["roomID"]);
+        document.location = "{{ url_for('main.play',roomID=0)[:-2] + '/' }}"+data["roomID"];
+    })
+    
+    socket.on("waiting", function(data) { // Let the user know we're waiting for an opponent when finding a game from a random
+        alert("Waiting...");
+    })
+
+    socket.on("got_room", function(data) { // Receive a challenge page from the server, and redirect to the challenge page.
+        document.location = "{{ url_for('main.challenge',roomID=0)[:-2] + '/' }}"+data["roomID"];
+    })
+</script>

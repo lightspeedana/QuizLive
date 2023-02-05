@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% include "webhooks.html" %}
+{% endblock %}
+{% block content %}
+<h1 class="title">
+  Challenge an Opponent!
+</h1>
+<br>
+<h2 class="subtitle">Select the deck you wish to use:</h2>
+  <div class="field has-addons">
+      <div class="control is-expanded">
+        <div class="select is-medium is-fullwidth">
+          <select id="deckselect">
+            <option value="" disabled selected>Select Deck</option>
+            {% for deck in decklist %}
+            <option value={{deck.id}}>{{deck.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+  </div>
+<br>
+<a onclick="find_random(document.getElementById('deckselect').value, '{{user.name}}')" class="button is-link is-medium">Challenge Random Opponent<a></a>
+<a onclick="challenge(document.getElementById('deckselect').value, '{{user.name}}')" class="button is-link is-medium">Challenge a Friend<a></a>
+{% endblock %}

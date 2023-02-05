@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Create a New Deck
+</h1>
+<br><br>
+<form method="POST" action="/make">
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="title" name="title" placeholder="Deck Title" autofocus="">
+        </div>
+    </div>
+    <button class="button is-block is-info is-large is-fullwidth">Create</button>
+</form>
+{% endblock %}

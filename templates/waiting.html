@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script>
+var roomID={{roomID}}; // Render variable for roomID in at template level
+
+function wait() { // Every 300 milliseconds, ask the server whether the game is finished. This only occurs while on the waiting screen.
+    socket.emit("query_room_finished", {"roomID":roomID});
+    setTimeout(wait, 300);
+}
+
+setTimeout(wait, 300);
+
+</script>
+{% include 'webhooks.html' %}
+{% endblock %}
+
+{% block content %}
+<h1 class="title">
+  Waiting for your Opponent...
+</h1>
+<h2 class="subtitle">
+  Your opponent hasn't finished playing yet!
+</h2>
+<h2 class="subtitle"><span class="has-text-success">Your Score:</span> {{ score }}</h2>
+{% endblock %}

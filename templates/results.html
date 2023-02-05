@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Results:
+</h1>
+<h2 class="subtitle">
+  {{ ("You won!" if not draw else "Meh... A draw.") if winner else "You lost... (◕﹏◕✿)" }}
+</h2>
+<h2 class="subtitle"><span class="has-text-success">Your Score:</span> {{ score }} ({{ correct }}/{{ total }})</h2>
+<h2 class="subtitle"><span class="has-text-success">Your Opponent's Score:</span> {{ oppscore }} ({{ oppcorrect }}/{{ total }})</h2>
+<h2 class="subtitle"><span class="has-text-success">Your New ELO:</span> {{ elo }}</h2>
+<a href="{{ url_for('main.select') }}" class="button is-link is-large is-fullwidth">Play Another Match</a><br>**
+<a href="{{ url_for('main.profile') }}" class="button is-link is-large is-fullwidth">View My Profile</a><br>
+{% endblock %}

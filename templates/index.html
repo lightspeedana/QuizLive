@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<img src="{{url_for('static', filename='logo.png')}}" align="middle" />
+<h1 class="title">
+  QuizLive
+</h1>
+<h2 class="subtitle">
+  Challenge your Friends, Anytime, Anywhere!
+</h2>
+{% if not current_user.is_authenticated %}
+<a href="{{ url_for('auth.login') }}" class="button is-link is-medium">Login<a>
+{% endif %}
+{% if current_user.is_authenticated %}
+<a href="{{ url_for('main.profile') }}" class="button is-link is-medium">Go to my Profile<a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% include "webhooks.html" %}
+{% if joining %}
+<script>
+  socket.emit("join_room", {"url":document.location}); // Tell the server we've joined the room and it should add us to room object
+</script>
+{% endif %}
+<script>
+  socket.emit("begin_timing", {"url":document.location}); // Tell the server to begin timing, as we've loaded the page and have started playing.
+</script>
+{% endblock %}
+
+{% block content %}
+<h1 class="title">
+  {{ firstq.question }}
+</h1>
+<a class="score">0</a>
+<a onclick="submit_answer(1)" class="button is-link is-large is-fullwidth a1">{{ firstq.answer1 }}</a><br>
+<a onclick="submit_answer(2)" class="button is-link is-large is-fullwidth a2">{{ firstq.answer2 }}</a><br>
+<a onclick="submit_answer(3)" class="button is-link is-large is-fullwidth a3">{{ firstq.answer3 }}</a><br>
+<a onclick="submit_answer(4)" class="button is-link is-large is-fullwidth a4">{{ firstq.answer4 }}</a><br>
+{% endblock %}

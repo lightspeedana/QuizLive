@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Profile - {{ user.name }}
+</h1>
+<h2 class="subtitle"><span class="has-text-success">ELO:</span> {{user.elo}}</h2>
+<h2 class="subtitle"><span class="has-text-success">Winrate:</span> {{ "Not calculated" if not user.matchcount else (user.wincount / user.matchcount * 100)|string()~"%"}}</h2>
+
+{% endblock %} <!-- if the user's not played a match then the user matchcount is 0 and the winrate cannot be calculated. A zero division error would occur if we tried-->

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Add a Question to a Deck
+</h1>
+<form method="POST" action="/add">
+  {% if edit %}
+  <input hidden name="edit" value={{question.id+1}}>
+  {% endif %}
+    <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select is-medium is-fullwidth">
+            <select name="deckselect">
+              {% if edit %}
+              <option value="" disabled>Select Deck</option>
+              {% else %}
+              <option value="" disabled selected>Select Deck</option>
+              {% endif %}
+              {% for deck in decklist %}
+              {% if edit %}
+              {% if deck == selecteddeck %}
+              <option value={{deck.name}} selected>{{deck.name}}</option>
+              {% else %}
+              <option value={{deck.name}}>{{deck.name}}</option>
+              {% endif %}
+              {% else %}
+              <option value={{deck.name}}>{{deck.name}}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+    </div>    
+    <div class="field">
+        <div class="control">
+            <textarea class="textarea" name="question" placeholder="Enter your Question:">{{ question.question if edit else "" }}</textarea>
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="text" name="question1" {{ 'value='~question.answer1~' ' if edit else "" }}placeholder="Answer 1" autofocus="">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="text" name="question2" {{ 'value='~question.answer2~' ' if edit else "" }}placeholder="Answer 2" autofocus="">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="text" name="question3" {{ 'value='~question.answer3~' ' if edit else "" }}placeholder="Answer 3" autofocus="">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="text" name="question4" {{ 'value='~question.answer4~' ' if edit else "" }}placeholder="Answer 4" autofocus="">
+        </div>
+    </div>
+    <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Which is the Correct Answer?</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                  <label class="radio">
+                    <input type="radio" name="correct" value="1" {{"checked" if edit and question.correct=="1" else ""}}>
+                    Answer 1
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="correct" value="2"{{"checked" if edit and question.correct=="2" else ""}}>
+                    Answer 2
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="correct" value="3"{{"checked" if edit and question.correct=="3" else ""}}>
+                    Answer 3
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="correct" value="4"{{"checked" if edit and question.correct=="4" else ""}}>
+                    Answer 4
+                  </label>
+                </div>
+              </div>
+        </div>
+      </div>
+    
+    <button class="button is-block is-info is-large is-fullwidth">Add to Deck</button>
+</form>
+{% endblock %}

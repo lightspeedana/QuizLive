@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+    Give your friend this link to play!
+</h1>
+<h2 class="subtitle">
+  {{ request.url_root[:-1] + url_for('main.challenge', roomID=roomID) }}
+</h2>
+<a href="{{ url_for('main.join_room_get', roomID=roomID) }}" class="button is-link is-medium">Play<a></a>
+{% endblock %}

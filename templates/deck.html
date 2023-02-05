@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<h1 class="title">
+  {{chosen_deck.name}}
+</h1>
+<h2 class="subtitle">Made by {{chosen_deck.creator}}</h2>
+<h2 class="subtitle">Created at {{chosen_deck.creation_time}}</h2>
+<a href="{{ url_for('main.select') }}" class="button is-link is-medium">Play</a>
+{% if id == chosen_deck.uid %}
+<a href="{{ url_for('.delete_deck', id=chosen_deck.id) }}" class="button is-danger is-medium">Delete Deck</a>
+{% endif %}
+  <br><br><br>
+  <h1 class="title m-4">
+    Questions
+  </h1>
+  <section class="cards">
+    <div class="columns is-multiline">
+      {% for question in questions %}
+      <div class="column is-4">
+        <div class="card">
+          <p class="card-header-title">
+            {{question.question}}
+          </p>
+          <div class="card-content">
+            <div class="content">
+              <ul>
+                <li class="{{ 'has-text-danger' if question.correct == '1' else '' }}">{{question.answer1}}</li>
+                <li class="{{ 'has-text-danger' if question.correct == '2' else '' }}">{{question.answer2}}</li>
+                <li class="{{ 'has-text-danger' if question.correct == '3' else '' }}">{{question.answer3}}</li>
+                <li class="{{ 'has-text-danger' if question.correct == '4' else '' }}">{{question.answer4}}</li>
+              </ul>
+            </div>
+          </div>
+          {% if id == chosen_deck.uid %}
+          <footer class="card-footer">
+            <a href="{{ url_for('.edit_question', deckID=chosen_deck.id, qID=question.id) }}" class="card-footer-item">Edit</a>
+            <a href="{{ url_for('.delete_question', deckid=chosen_deck.id, qID=question.id) }}" class="card-footer-item">Delete</a>
+          </footer>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    </section>
+{% endblock %}
